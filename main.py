@@ -4,7 +4,10 @@ import urllib.request
 from datetime import datetime, timezone
 
 # Настройки
-BASE = (os.environ.get("NAME") or "USD").upper()  # базовая валюта
+BASE = (os.environ.get("NAME") or "USD").strip().upper()
+if not (len(BASE) == 3 and BASE.isascii() and BASE.isalpha()):
+    print(f"'{BASE}' не похоже на код валюты, использую USD")
+    BASE = "USD"  # базовая валюта
 TARGETS = ["KZT", "EUR", "RUB", "GBP", "CNY"]     # какие валюты показывать
 TG_TOKEN = os.environ.get("TG_TOKEN")
 TG_CHAT_ID = os.environ.get("TG_CHAT_ID")
